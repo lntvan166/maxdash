@@ -162,10 +162,13 @@
     await phone(`${A}phone/navigating.jpg`);
 
     await caption("The phone draws the map, the dash shows it", "About 4 frames a second over the bike's own link");
-    await play("ride", 1, 96, 12, (i) => speedTo(i < 6 ? 12 : 31 + 5 * Math.sin(i / 9)));
+    await play("ride", 1, 60, 12, (i) => speedTo(i < 6 ? 12 : 31 + 5 * Math.sin(i / 9)));
+    await caption("Two modes: full-screen map or the turn panel", "Double-press the handlebar button to switch; the panel comes back before each turn");
+    await play("ride-full", 61, 150, 12, (i) => speedTo(31 + 5 * Math.sin(i / 9)));
     await caption("Turns, cross streets, speed limits", "The street name and the speed sign are the dash's own, set by the phone");
+    await phone(`${A}phone/navigating.jpg`);
     cluster.sign(50);
-    await play("ride", 97, 200, 12, (i) => speedTo(i > 150 && i < 170 ? 18 : 33 + 4 * Math.sin(i / 7)));
+    await play("ride", 151, 200, 12, (i) => speedTo(i > 150 && i < 170 ? 18 : 33 + 4 * Math.sin(i / 7)));
     cluster.sign(null);
 
     await caption("Music, bike data and weather", "Pages switch with the handlebar buttons");
