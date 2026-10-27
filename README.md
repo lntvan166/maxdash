@@ -13,9 +13,19 @@ an agent skill that walks you through it, even if you have never written code.
 
 ## Start here
 
+**Quickest:** open an AI coding agent (Claude Code, Codex, Cursor, Antigravity, or similar) in an empty folder
+on your computer and paste:
+
+> Clone https://github.com/lntvan166/maxdash, read its AGENTS.md and help me build my own dash app.
+
+Any language works. **Or by hand:**
+
 1. Download this repository (green **Code** button › **Download ZIP**, then unzip), or `git clone` it.
-2. Open the folder in an AI coding agent: Claude Code, Codex, Cursor, Antigravity, or similar.
-3. Say: **"Help me build my own dash app."** In any language.
+2. Open the folder in your AI coding agent.
+3. Say: **"Help me build my own dash app."**
+
+It has to be a coding agent that can work with files on your computer. A chat in a web browser alone cannot
+build and install an app.
 
 The agent asks about your phone, your computer and what you want, shows you the templates, lets you pick
 how maps and routes work, builds the app with you and walks you through installing it. The first goal: share

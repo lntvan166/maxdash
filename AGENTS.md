@@ -7,6 +7,12 @@ dash to show *their* map and *their* design.
 This file is the whole skill. Claude Code, Codex, Cursor, Gemini / Antigravity and other agents all start
 here. Follow it in order.
 
+## If you were given only the link
+
+If the rider pasted the repository link instead of opening the folder: clone
+`https://github.com/lntvan166/maxdash` into a `maxdash` folder in the current directory (or download the ZIP
+if git is missing), then follow this file from there. Their own app still goes next to it, not inside it.
+
 ## Ground rules
 
 - **Talk in the rider's language.** If they write Vietnamese, answer in Vietnamese; Indonesian, Thai, English,
