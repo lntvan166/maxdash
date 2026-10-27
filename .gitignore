@@ -1,0 +1,5 @@
+docs/superpowers/
+.superpowers/
+.DS_Store
+node_modules/
+media/raw/
