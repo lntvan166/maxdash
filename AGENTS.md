@@ -77,7 +77,7 @@ again. Explain how they will re-install (Xcode Run, or Sideloadly).
    ([dash-canvas.md](docs/how-it-works/dash-canvas.md)): no text under the zoom buttons or the bottom bar;
    text ≥ 16 px; flat colours so a frame stays around 5–8 KB.
    Check their dash mockups with `node tools/check_templates.mjs --dir <their design folder>` (run from
-   `maxdash`, after installing Node.js from nodejs.org and running `npm install` there once; it checks the safe area at 480×234 and 480×240 and saves screenshots in `media/raw/`). It does
+   `maxdash`, after installing Node.js from nodejs.org and running `npm install` there once; it checks the safe area at 480×234 and 480×240 and saves screenshots in the git-ignored media/raw folder). It does
    not measure JPEG size: that is checked in the real app.
 
 ## Step 4: maps and routing
