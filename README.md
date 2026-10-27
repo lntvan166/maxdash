@@ -64,7 +64,8 @@ Classic. Its findings are restated here in our own words where they are used.
 
 ## Where the facts come from
 
-Compiled by the author from public information on the internet, then tested on the author's NMAX Turbo.
+Mostly the author's own hand measurements on their NMAX Turbo, first with a small probe app that logs every
+frame the bike sends and tries one command at a time; the rest is public information from the internet.
 Every claim carries its source label; when a bike disagrees with the docs, the bike wins and the docs change.
 
 ## Contributing
@@ -77,6 +78,25 @@ reports, fixes, new designs: see [CONTRIBUTING.md](CONTRIBUTING.md).
 **Please open a [GitHub issue](https://github.com/lntvan166/maxdash/issues/new/choose)** for bike reports, findings,
 questions and ideas: everyone can see and build on the answer. Not on GitHub? Message
 [@nolan166 on Telegram](https://t.me/nolan166).
+
+## Disclaimer
+
+- **Unofficial and independent.** maxdash is a personal, non-commercial project about interoperability. It
+  is not affiliated with, endorsed by, or connected to Yamaha Motor, Garmin or Apple. Yamaha, NMAX, XMAX,
+  TMAX, Y-Connect and Garmin are trademarks of their owners and are named only to say which bikes and
+  devices this is about.
+- **No vendor material.** The repo holds no code, firmware, text, images or logos from Yamaha, Garmin or
+  their apps. Protocol facts are described in our own words, from our own measurements and public
+  information.
+- **Use at your own risk.** Everything here is provided "as is", without warranty of any kind (see the
+  licences). Connecting your own app to your bike is your choice and your responsibility, and it may affect
+  your warranty. The authors and contributors are not liable for any damage to your bike, dash or phone,
+  for data loss, or for any injury or loss that comes from using this material.
+- **Ride safely.** Set the app up before you ride. Do not look at or touch the phone while riding. Routes,
+  street names and speed limits shown on the dash can be wrong or late: road signs and traffic law always
+  come first.
+- **Your own terms.** You are responsible for following the laws where you ride and the terms of the
+  services you use (map and routing providers, app stores).
 
 ## Licence
 
