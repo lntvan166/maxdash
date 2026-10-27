@@ -1,0 +1,26 @@
+name: Protocol finding
+description: A command, field or behaviour the docs get wrong or don't cover.
+title: "Protocol: <short description>"
+labels: ["protocol"]
+body:
+  - type: dropdown
+    id: link
+    attributes: { label: Which link, options: ["Link A (dash)", "Link B (CCU)", "Not sure"] }
+    validations: { required: true }
+  - type: textarea
+    id: finding
+    attributes:
+      label: What you found
+      description: Bytes in hex, which direction, and how you saw it (on a bike? from where?).
+    validations: { required: true }
+  - type: textarea
+    id: doc
+    attributes:
+      label: What the docs say now
+      description: File and section, e.g. docs/protocol/link-a-dash.md → Map frames.
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source
+      options: ["Seen on my bike (observed)", "Read somewhere public (documented)", "My guess (assumed)"]
+    validations: { required: true }

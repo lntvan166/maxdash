@@ -1,0 +1,3 @@
+# fixture-only leak patterns (fake values)
+private\.example\.invalid
+9999000011

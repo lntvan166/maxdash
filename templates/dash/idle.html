@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=480">
+<title>Dash: ready</title>
+<link rel="stylesheet" href="dash.css">
+<style>
+  .card { padding-left: 72px; }
+  .hint { display: flex; gap: 8px; align-items: center; font: 500 16px/20px var(--font); color: var(--d-muted); margin-top: 10px; }
+  .hint svg { width: 20px; height: 20px; flex: none; }
+</style>
+</head>
+<body>
+<!-- No route yet: a calm ready screen. The rider shares a place from Google Maps to start. -->
+<main class="dash" data-road="Nguyễn Huệ">
+  <div class="card">
+    <div class="t" data-keep="greeting">Good evening</div>
+    <div class="s" data-keep="weather">29° · showers likely at 22:00</div>
+    <div class="hint" data-keep="hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11M6 6l4-4 4 4M4 11v6h12v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Share a place from Google Maps</div>
+  </div>
+</main>
+<script src="frame.js"></script>
+</body>
+</html>

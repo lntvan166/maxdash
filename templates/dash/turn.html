@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=480">
+<title>Dash: turn ahead</title>
+<link rel="stylesheet" href="dash.css">
+</head>
+<body>
+<!-- Approaching a turn: 30 m, turn left into Lê Quang Sung, then right. The cross street is named on the map. -->
+<main class="dash" data-road="Nguyễn Hữu Thận">
+  <svg class="map" viewBox="0 0 480 240" aria-hidden="true">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- minor streets -->
+      <path d="M150 44H480M214 0V118M410 0V240M150 196H480M252 118V240" stroke="var(--d-road-minor)" stroke-width="7"/>
+      <!-- the street ridden (x 320) and the cross street (y 140) -->
+      <path d="M320 0V240M150 118H480" stroke="var(--d-road-major)" stroke-width="16"/>
+      <!-- one continuous route: passed part grey, the rest amber, a rounded corner into the turn -->
+      <path d="M320 260V178" stroke="var(--d-route-passed)" stroke-width="10"/>
+      <path d="M320 178V142Q320 118 296 118H140" stroke="var(--d-route)" stroke-width="10"/>
+    </g>
+    <path d="M320 166l-12 24 12-7 12 7z" fill="var(--d-me)" stroke="var(--d-ground)" stroke-width="3" stroke-linejoin="round"/>
+  </svg>
+  <div class="panel">
+    <div class="rail"></div>
+    <svg class="glyph" viewBox="0 0 50 58" aria-label="Turn left" data-keep="turn glyph">
+      <path d="M38 58V30Q38 20 28 20H10" fill="none" stroke="var(--d-route)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M19 9L8 20l11 11" fill="none" stroke="var(--d-route)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="dist" data-keep="distance">30<small>m</small></div>
+    <div class="street" data-keep="street">Lê Quang Sung</div>
+    <div class="then" data-keep="then"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 16V9h9M10 5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Then right</div>
+  </div>
+  <div class="label" style="left:226px;top:52px" data-keep="map label">Hồng Bàng</div>
+  <div class="pill" style="left:188px;top:84px" data-keep="cross street">Lê Quang Sung</div>
+  <div class="eta" data-keep="eta"><b>14:42</b><span>7.0 km</span></div>
+</main>
+<script src="frame.js"></script>
+</body>
+</html>

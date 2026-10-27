@@ -1,0 +1,56 @@
+name: Bike report
+description: You tried maxdash (or your own app) on a bike. Tell us what happened, good or bad.
+title: "Bike report: <model> <year>, dash <part number>"
+labels: ["bike-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Every report makes the protocol clearer for everyone.
+        Please leave out serial numbers, VINs, plate numbers, home addresses and other private data.
+  - type: input
+    id: bike
+    attributes: { label: Bike model, placeholder: "NMAX Turbo / Tech MAX, XMAX 300, ..." }
+    validations: { required: true }
+  - type: input
+    id: year
+    attributes: { label: Year and market, placeholder: "2025, Vietnam" }
+    validations: { required: true }
+  - type: input
+    id: part
+    attributes:
+      label: Dash part number
+      description: From cmd 83 (after XOR 0x0A), e.g. 006-B3952-01. Write "unknown" if you don't have it.
+    validations: { required: true }
+  - type: input
+    id: screen
+    attributes: { label: Screen size seen, placeholder: "480×234 / 480×240 / not sure" }
+  - type: input
+    id: phone
+    attributes: { label: Phone and OS, placeholder: "iPhone 13, iOS 26.5 / Pixel 8, Android 15" }
+    validations: { required: true }
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you sent and what happened
+      description: "One line per command if you can: command, flag, bytes, and what the dash or bike did."
+      placeholder: |
+        3 flag 1 "Lê Lợi" → bottom bar shows ▲ Lê Lợi
+        17 flag 1 limit 50 → sign appears
+        51 (UP) arrives only once → added 14 07 1A 00 00 → every press arrives
+    validations: { required: true }
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, hex dumps, photos
+      description: Drag files here. Photos of the dash help a lot.
+  - type: dropdown
+    id: vectors
+    attributes:
+      label: Did your code pass every file in vectors/?
+      options: ["Yes", "No (say which failed above)", "Not using them"]
+  - type: dropdown
+    id: credit
+    attributes:
+      label: May we credit you in observations.md?
+      options: ["Yes, with my GitHub handle", "No, keep it anonymous"]

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=480">
+<title>Dash: arrived</title>
+<link rel="stylesheet" href="dash.css">
+<style>
+  .dash { background: radial-gradient(60% 120% at 28% 45%, color-mix(in srgb, var(--d-route) 30%, transparent) 0%, transparent 70%), var(--d-ground); }
+  .pin { position: absolute; left: 70px; top: 40px; width: 96px; height: 120px; }
+  .card { padding-left: 190px; }
+</style>
+</head>
+<body>
+<!-- Arrival: the route's amber pools around the pin. Shown for a while after arriving, then back to the map. -->
+<main class="dash" data-road="Lê Lợi">
+  <svg class="pin" viewBox="0 0 96 120" aria-hidden="true" data-keep="pin">
+    <path d="M48 120V72" stroke="var(--d-route)" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="48" cy="42" r="28" fill="none" stroke="var(--d-route)" stroke-width="10"/>
+    <circle cx="48" cy="42" r="9" fill="var(--d-ink)"/>
+  </svg>
+  <div class="card">
+    <div class="t" data-keep="title">You're here</div>
+    <div class="s" data-keep="place">Ben Thanh Market</div>
+    <div class="f" data-keep="summary"><b>5.1 km</b> · 15 min · 14:51</div>
+  </div>
+</main>
+<script src="frame.js"></script>
+</body>
+</html>

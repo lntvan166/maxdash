@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>maxdash templates</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--text); font: 400 15px/22px var(--font); padding: 32px 16px 64px; }
+  .col { max-width: 1120px; margin: 0 auto; display: grid; gap: 40px; }
+  h1 { margin: 0; font-size: 28px; line-height: 34px; }
+  h2 { margin: 0 0 4px; font-size: 18px; }
+  p { margin: 0; color: var(--muted); max-width: 70ch; }
+  code { font: 13px ui-monospace, Menlo, monospace; color: var(--text); }
+  .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr)); }
+  .phones { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+  figure { margin: 0; display: grid; gap: 8px; }
+  figcaption { color: var(--muted); font-size: 13px; }
+  .dash-fit { width: 100%; aspect-ratio: 480 / 234; overflow: hidden; border-radius: 6px; outline: 1px solid var(--rule); position: relative; container-type: inline-size; }
+  .dash-fit iframe { position: absolute; left: 0; top: 0; width: 480px; height: 234px; border: 0; transform-origin: 0 0; transform: scale(calc(100cqw / 480px)); }
+  .phone-fit { width: 100%; aspect-ratio: 390 / 844; overflow: hidden; border-radius: 28px; outline: 1px solid var(--rule); position: relative; container-type: inline-size; }
+  .phone-fit iframe { position: absolute; left: 0; top: 0; width: 390px; height: 844px; border: 0; transform-origin: 0 0; transform: scale(calc(100cqw / 390px)); }
+  a { color: var(--link); }
+</style>
+</head>
+<body>
+<div class="col">
+  <header>
+    <h1>maxdash templates</h1>
+    <p>A starting design for your own app: the screens on the bike's dash and on your phone. Keep it, tweak it, or design your own. Colours live in <code>tokens.css</code>.</p>
+  </header>
+
+  <section>
+    <h2>Dash (480×234)</h2>
+    <p>What your app draws and sends as JPEG frames. The zoom buttons, the bottom road bar and the round speed sign are drawn by the dash itself on top. Open a page with <code>?mode=day</code>, <code>?h=240</code>, <code>?guides=1</code> or <code>?chrome=0</code>.</p>
+    <div class="grid" style="margin-top:16px">
+      <figure><div class="dash-fit"><iframe src="dash/map.html" title="Map"></iframe></div><figcaption><a href="dash/map.html">map.html</a>: cruising, next turn far ahead, the dash's own speed sign</figcaption></figure>
+      <figure><div class="dash-fit"><iframe src="dash/turn.html" title="Turn"></iframe></div><figcaption><a href="dash/turn.html">turn.html</a>: 30 m to a turn, the cross street named on the map</figcaption></figure>
+      <figure><div class="dash-fit"><iframe src="dash/map.html?mode=day" title="Map, day"></iframe></div><figcaption><a href="dash/map.html?mode=day">map.html?mode=day</a>: the day palette</figcaption></figure>
+      <figure><div class="dash-fit"><iframe src="dash/arrival.html" title="Arrived"></iframe></div><figcaption><a href="dash/arrival.html">arrival.html</a>: arrived</figcaption></figure>
+      <figure><div class="dash-fit"><iframe src="dash/idle.html" title="Ready"></iframe></div><figcaption><a href="dash/idle.html">idle.html</a>: no route yet</figcaption></figure>
+      <figure><div class="dash-fit"><iframe src="dash/turn.html?guides=1" title="Safe area"></iframe></div><figcaption><a href="dash/turn.html?guides=1">turn.html?guides=1</a>: where text must not go</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>On the bike</h2>
+    <p>Any dash page inside the drawn NMAX cluster: <a href="cluster/preview.html?page=../dash/turn.html">cluster/preview.html?page=…</a>. Use <code>cluster/cluster.js</code> in your own mockups.</p>
+  </section>
+
+  <section>
+    <h2>Phone (390×844)</h2>
+    <p>The app on the phone. During a ride it sits in a pocket, so it stays simple.</p>
+    <div class="phones" style="margin-top:16px">
+      <figure><div class="phone-fit"><iframe src="phone/home.html" title="Ride"></iframe></div><figcaption><a href="phone/home.html">home.html</a></figcaption></figure>
+      <figure><div class="phone-fit"><iframe src="phone/share-confirm.html" title="Confirm"></iframe></div><figcaption><a href="phone/share-confirm.html">share-confirm.html</a></figcaption></figure>
+      <figure><div class="phone-fit"><iframe src="phone/navigating.html" title="Navigating"></iframe></div><figcaption><a href="phone/navigating.html">navigating.html</a></figcaption></figure>
+      <figure><div class="phone-fit"><iframe src="phone/settings.html" title="Settings"></iframe></div><figcaption><a href="phone/settings.html">settings.html</a></figcaption></figure>
+    </div>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "about": "Bike-to-phone frames. Decode input.frame_hex (check magic, length and CRC) and compare with expect.",
+  "vectors": [
+    {
+      "id": "bike-66",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Serial (the real serial is replaced by 0000000000)",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 42 0A 00 00 00 00 22 E3 16 18 30 30 30 30 30 30 30 30 30 30"
+      },
+      "expect": {
+        "command": 66,
+        "flag": 0,
+        "payload_hex": "30 30 30 30 30 30 30 30 30 30",
+        "means": {
+          "serial": "0000000000"
+        }
+      }
+    },
+    {
+      "id": "bike-82",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Authentication result: accepted",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 52 02 00 00 00 00 63 0D BF 37 01 00"
+      },
+      "expect": {
+        "command": 82,
+        "flag": 0,
+        "payload_hex": "01 00",
+        "means": {
+          "authenticated": true
+        }
+      }
+    },
+    {
+      "id": "bike-83",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Challenge captured on the NMAX Turbo",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 53 10 00 00 00 01 AD 20 B5 0B 3A 3A 3C 27 48 39 33 3F 38 27 3A 3B 4E 3E 04 00"
+      },
+      "expect": {
+        "command": 83,
+        "flag": 1,
+        "payload_hex": "3A 3A 3C 27 48 39 33 3F 38 27 3A 3B 4E 3E 04 00",
+        "means": {
+          "part_number": "006-B3952-01",
+          "key_hex": "44 34 0E 0A",
+          "screen": [
+            480,
+            234
+          ]
+        }
+      }
+    },
+    {
+      "id": "bike-55",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Show frames (rider pressed Home). Note direction byte 01.",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 01 37 02 00 00 00 00 2E 00 08 07 01 00"
+      },
+      "expect": {
+        "command": 55,
+        "flag": 0,
+        "payload_hex": "01 00",
+        "means": {
+          "start_frames": true
+        }
+      }
+    },
+    {
+      "id": "bike-56",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Pause",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 38 02 00 00 00 00 F7 42 5A 9F 0B 00"
+      },
+      "expect": {
+        "command": 56,
+        "flag": 0,
+        "payload_hex": "0B 00",
+        "means": {
+          "pause": true
+        }
+      }
+    },
+    {
+      "id": "bike-65",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Bike speed 40 km/h",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 41 03 00 00 00 00 6C A3 6F 8F 00 28 00"
+      },
+      "expect": {
+        "command": 65,
+        "flag": 0,
+        "payload_hex": "00 28 00",
+        "means": {
+          "speed_kmh": 40
+        }
+      }
+    },
+    {
+      "id": "bike-51",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Handlebar UP",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 33 00 00 00 00 00 4B E3 F1 BD"
+      },
+      "expect": {
+        "command": 51,
+        "flag": 0,
+        "payload_hex": "",
+        "means": {
+          "button": "up"
+        }
+      }
+    },
+    {
+      "id": "bike-52",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Handlebar DOWN",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 34 00 00 00 00 00 23 C1 29 FC"
+      },
+      "expect": {
+        "command": 52,
+        "flag": 0,
+        "payload_hex": "",
+        "means": {
+          "button": "down"
+        }
+      }
+    },
+    {
+      "id": "bike-80",
+      "label": "documented — not yet observed",
+      "source": "docs/protocol/link-a-dash.md",
+      "note": "Frame ACK for frame id 336 (encoding documented)",
+      "input": {
+        "frame_hex": "6E 41 6C 40 01 03 50 02 00 00 00 00 C3 9F 33 07 50 01"
+      },
+      "expect": {
+        "command": 80,
+        "flag": 0,
+        "payload_hex": "50 01",
+        "means": {
+          "ack_frame_id": 336
+        }
+      }
+    }
+  ]
+}

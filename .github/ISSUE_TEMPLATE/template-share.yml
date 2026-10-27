@@ -1,0 +1,19 @@
+name: Share your design
+description: Show the dash or phone design you made. Others can start from it.
+title: "Design: <name>"
+labels: ["design"]
+body:
+  - type: textarea
+    id: shots
+    attributes:
+      label: Screenshots or a photo of the dash
+      description: Drag images here. A photo of it on the bike is the best.
+    validations: { required: true }
+  - type: textarea
+    id: notes
+    attributes: { label: What you changed and why }
+  - type: dropdown
+    id: pr
+    attributes:
+      label: Would you like it added to templates/?
+      options: ["Yes, I can open a pull request", "Yes, please add it for me", "No, just sharing"]

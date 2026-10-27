@@ -1,0 +1,62 @@
+/* maxdash template tokens (the "Taste" direction).
+   True-black, flat, elevation by lightness only. One data hue, sodium amber (the colour of Saigon's street
+   lamps), used for the route and nothing else. Change these to restyle every template at once. */
+
+:root {
+  /* phone app, dark */
+  --ground: #000000;
+  --surface: #1c1c1e;
+  --raised: #2c2c2e;
+  --rule: #38383a;
+  --text: #ffffff;
+  --muted: #a1a1a8;
+  --accent: #f2b33d;
+  --positive: #30d158;
+  --warning: #ff9f0a;
+  --negative: #ff453a;
+  --link: #0a84ff;
+  --radius-card: 12px;
+  --font: -apple-system, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+
+/* dash frame: fixed per mode, never follows the phone theme (it is a JPEG on the bike) */
+.dash {
+  --d-ground: #000000;
+  --d-panel: #111111;
+  --d-raised: #2a2a2a;
+  --d-road-major: #343434;
+  --d-road-minor: #181818;
+  --d-water: #0c1b2b;
+  --d-park: #0d1a10;
+  --d-ink: #ffffff;
+  --d-muted: #b4b4b4;
+  --d-route: #f2b33d;
+  --d-route-passed: #5a5a5a;
+  --d-me: #ffffff;
+  --d-rail: rgba(0, 0, 0, 0.55);
+  --d-warn: #ffc21a;
+}
+.dash.day {
+  --d-ground: #e8e6e1;
+  --d-panel: #ffffff;
+  --d-raised: #dad7d1;
+  --d-road-major: #bbb7af;
+  --d-road-minor: #dad7d1;
+  --d-water: #bdd2e2;
+  --d-park: #d2dcc4;
+  --d-ink: #0b0b0b;
+  --d-muted: #4a4a4a;
+  --d-route: #c97d0c;
+  --d-route-passed: #9a968f;
+  --d-me: #0b0b0b;
+  --d-rail: rgba(11, 11, 11, 0.14);
+  --d-warn: #e0a000;
+}
+
+/* Dash type: the system font, semibold for what is read while riding. Minimum 16 px. */
+.dash {
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}

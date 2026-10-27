@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "about": "CRC-32/MPEG-2: poly 0x04C11DB7, init 0xFFFFFFFF, MSB first, no final XOR. Input is the 12 header bytes then the payload.",
+  "vectors": [
+    {
+      "id": "empty",
+      "label": "assumed",
+      "source": "CRC-32/MPEG-2 definition",
+      "input": {
+        "hex": ""
+      },
+      "expect": {
+        "crc32_mpeg2": "0xFFFFFFFF"
+      }
+    },
+    {
+      "id": "check-123456789",
+      "label": "assumed",
+      "source": "CRC-32/MPEG-2 definition (standard check value)",
+      "input": {
+        "hex": "313233343536373839"
+      },
+      "expect": {
+        "crc32_mpeg2": "0x0376E6E7"
+      }
+    },
+    {
+      "id": "hello-81-header-and-payload",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "input": {
+        "hex": "6E 41 6C 40 01 06 51 02 00 00 00 00 01 00"
+      },
+      "expect": {
+        "crc32_mpeg2": "0xEC1C4D1A"
+      }
+    },
+    {
+      "id": "bike-83-header-and-payload",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "input": {
+        "hex": "6E 41 6C 40 01 03 53 10 00 00 00 01 3A 3A 3C 27 48 39 33 3F 38 27 3A 3B 4E 3E 04 00"
+      },
+      "expect": {
+        "crc32_mpeg2": "0x0BB520AD"
+      }
+    }
+  ]
+}

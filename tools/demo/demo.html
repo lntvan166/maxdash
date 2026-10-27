@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>maxdash demo</title>
+<link rel="stylesheet" href="../../templates/tokens.css">
+<style>
+  /* The README recording, 1280×720. Part 1 plays the author's own app: real phone screens and frames from its
+     renderer (assets in media/raw/demo/, made by the author's app, not part of this repo). Part 2 shows the
+     maxdash templates. Sets window.demoDone when finished. */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: #0a0a0b; color: #fff; font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  .stage { position: absolute; inset: 0; display: grid; grid-template-columns: 300px 1fr; column-gap: 64px; align-items: center; padding: 0 64px 0 84px; }
+
+  /* phone at the true iPhone ratio (390×844) */
+  .phone { position: relative; width: 300px; height: 636px; border-radius: 52px; background: #1b1b1e; padding: 9px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.8), inset 0 0 0 1.5px #3a3a3f; }
+  .screen { position: relative; width: 282px; height: 618px; border-radius: 44px; overflow: hidden; background: #000; }
+  .screen .layer { position: absolute; inset: 0; isolation: isolate; opacity: 0; transition: opacity .45s cubic-bezier(.2,.7,.2,1); }
+  .screen .layer.on { opacity: 1; }
+  .screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .screen iframe { width: 390px; height: 844px; border: 0; transform: scale(calc(282 / 390)); transform-origin: 0 0; pointer-events: none; }
+  .island { position: absolute; left: 50%; top: 11px; width: 86px; height: 25px; margin-left: -43px; border-radius: 13px; background: #000; z-index: 3; }
+
+  .right { display: grid; gap: 22px; justify-items: center; }
+  .caption { width: 820px; min-height: 76px; transition: opacity .35s ease; }
+  .caption.out { opacity: 0; }
+  .caption h1 { margin: 0; font: 600 30px/36px var(--font); letter-spacing: -0.01em; }
+  .caption p { margin: 6px 0 0; font: 500 17px/24px var(--font); color: #a1a1a8; }
+  .clusterbox { width: 820px; height: 525px; position: relative; }
+  .clusterbox > .cluster { transform: scale(0.82); transform-origin: 0 0; }
+  .frame .layer { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; }
+  .frame .layer.on { opacity: 1; }
+  .frame img, .frame iframe { width: 480px; height: 234px; display: block; border: 0; }
+  .tag { position: absolute; right: 64px; bottom: 26px; font: 600 15px/20px var(--font); color: #8e8e93; letter-spacing: .02em; }
+  .tag b { color: #fff; font-weight: 600; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; background: #1c1c1e; border-radius: 26px 26px 0 0; padding: 18px 16px 34px; transform: translateY(105%); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+  .sheet.up { transform: none; }
+  .sheet .t { font: 600 15px/20px var(--font); }
+  .sheet .s { font: 400 13px/18px var(--font); color: #a1a1a8; margin-bottom: 16px; }
+  .sheet .apps { display: flex; gap: 14px; }
+  .sheet .apps div { display: grid; justify-items: center; gap: 6px; font: 400 11px/13px var(--font); color: #d1d1d6; width: 54px; text-align: center; }
+  .sheet .apps i { width: 54px; height: 54px; border-radius: 13px; background: #3a3a3c; display: block; }
+  .sheet .apps .mine i { background: var(--accent); display: grid; place-items: center; }
+  .sheet .apps .mine svg { width: 28px; height: 28px; }
+  .scroll { position: absolute; inset: 0; overflow: hidden; background: #000; }
+  .scroll .track { position: absolute; left: 0; top: 0; width: 282px; transition: transform 2.4s cubic-bezier(.45,.05,.2,1); }
+  .scroll .part { position: absolute; left: 0; width: 282px; background-size: 282px auto; background-repeat: no-repeat; }
+  .scroll .fixed { position: absolute; left: 0; width: 282px; background-size: 282px auto; background-repeat: no-repeat; z-index: 1; }
+  .tap { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(255,255,255,.28); box-shadow: 0 0 0 2px rgba(255,255,255,.5); transform: scale(0); transition: transform .22s ease; z-index: 4; pointer-events: none; }
+  .tap.on { transform: scale(1); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone"><div class="screen" id="screen"><div class="island"></div><div class="tap" id="tap"></div>
+    <div class="sheet" id="sheet"><div class="t">Phở Hòa Pasteur</div><div class="s">maps.app.goo.gl</div>
+      <div class="apps"><div><i></i>Messages</div><div><i></i>Mail</div><div class="mine"><i><svg viewBox="0 0 28 28" fill="none" stroke="#000" stroke-width="2.6" stroke-linejoin="round"><path d="M14 4l8 19-8-4-8 4z"/></svg></i>Your app</div><div><i></i>Notes</div></div></div></div></div>
+  <div class="right">
+    <div class="caption" id="cap"><h1></h1><p></p></div>
+    <div class="clusterbox" id="clusterbox"></div>
+  </div>
+</div>
+<div class="tag"><b>maxdash</b> · build your own app for the NMAX / XMAX dash</div>
+<script src="../../templates/cluster/cluster.js"></script>
+<script>
+  const A = "../../media/raw/demo/";
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const cluster = mountCluster(document.getElementById("clusterbox"));
+
+  // Two stacked layers per surface so every change is a cross-fade, never a blank frame.
+  function surface(host, tag) {
+    let front = null;
+    return async (src, { hold = 0 } = {}) => {
+      const el = document.createElement("div");
+      el.className = "layer";
+      const media = document.createElement(tag(src));
+      media.src = src;
+      el.appendChild(media);
+      host.appendChild(el);
+      await new Promise((r) => { media.onload = r; setTimeout(r, 1500); });
+      requestAnimationFrame(() => el.classList.add("on"));
+      // drop every older layer on this surface (including ones added outside this helper)
+      front = el;
+      setTimeout(() => [...host.children].forEach((c) => c.classList.contains("layer") && c !== el && c !== front && c.remove()), 600);
+      await wait(450 + hold);
+    };
+  }
+  const kind = (src) => (src.endsWith(".html") || src.includes(".html?") ? "iframe" : "img");
+  const phone = surface(document.getElementById("screen"), kind);
+  const dash = surface(cluster.frame, kind);
+
+  // Frame sequences swap src in place (like the dash receiving frames), no fade.
+  async function play(folder, from, to, fps, onFrame) {
+    const el = document.createElement("div");
+    el.className = "layer on";
+    const img = new Image();
+    el.appendChild(img);
+    cluster.frame.appendChild(el);
+    for (let i = from; i <= to; i++) {
+      img.src = `${A}${folder}/${String(i).padStart(3, "0")}.jpg`;
+      onFrame && onFrame(i);
+      await wait(1000 / fps);
+    }
+    [...cluster.frame.children].forEach((c) => c !== el && c.remove());
+  }
+
+  // The bike tab, scrolled from the top to the maintenance list: two simulator shots stitched at the row they share
+  // (offsets in the simulator's 1206 px wide pixel space, scaled to the 282 px screen). Status bar and tab bar stay fixed like on the phone.
+  async function bikeScroll() {
+    const k = 282 / 1206, off = 1525, tab = 2360, stick = 620;
+    const px = (n) => `${(n * k).toFixed(1)}px`;
+    const el = document.createElement("div");
+    el.className = "layer";
+    el.innerHTML = `<div class="scroll">
+      <div class="track">
+        <div class="part" style="top:0;height:${px(tab)};background-image:url(${A}phone/bike1.jpg)"></div>
+        <div class="part" style="top:${px(off + stick)};height:${px(tab - stick)};background-image:url(${A}phone/bike2.jpg);background-position:0 -${px(stick)}"></div>
+      </div>
+      <div class="fixed" style="top:0;height:${px(150)};background-image:url(${A}phone/bike1.jpg)"></div>
+      <div class="fixed" style="top:${px(tab)};height:${px(2622 - tab)};background-image:url(${A}phone/bike1.jpg);background-position:0 -${px(tab)}"></div>
+    </div>`;
+    const screen = document.getElementById("screen");
+    screen.appendChild(el);
+    await wait(80);
+    el.classList.add("on");
+    [...screen.querySelectorAll(".layer")].forEach((l) => l !== el && setTimeout(() => l.remove(), 600));
+    await wait(2600);
+    el.querySelector(".track").style.transform = `translateY(-${px(off)})`;
+    await wait(3600);
+  }
+
+  // Settings, a quick look. The greeting name in this shot is a placeholder painted into the image.
+  const settings = () => phone(`${A}phone/settings.jpg`);
+
+  async function caption(title, sub) {
+    const c = document.getElementById("cap");
+    c.classList.add("out"); await wait(300);
+    c.querySelector("h1").textContent = title; c.querySelector("p").textContent = sub;
+    c.classList.remove("out");
+  }
+  async function tap(x, y) {
+    const t = document.getElementById("tap");
+    t.style.left = `${x}px`; t.style.top = `${y}px`;
+    t.classList.add("on"); await wait(260); t.classList.remove("on"); await wait(160);
+  }
+  let v = 0;
+  const speedTo = (target) => { v += (target - v) * 0.25; cluster.set({ speed: v }); };
+
+  (async () => {
+    cluster.set({ speed: 0, clock: "21:14", odo: 12480, fuel: 3 });
+    await Promise.all([phone(`${A}phone/places.jpg`), dash(`${A}pages/bike-night.jpg`)]);
+    await caption("One rider's own app on the NMAX dash", "The author's app: real phone screens, real frames from its renderer");
+    await wait(2200);
+
+    await caption("Share a place from Google Maps", "The app works out where you want to go");
+    const sheet = document.getElementById("sheet");
+    sheet.classList.add("up"); await wait(1300);
+    await tap(179, 556); sheet.classList.remove("up");
+    await phone(`${A}phone/chooser.jpg`, { hold: 900 });
+    await tap(141, 427);
+    await phone(`${A}phone/navigating.jpg`);
+
+    await caption("The phone draws the map, the dash shows it", "About 4 frames a second over the bike's own link");
+    await play("ride", 1, 96, 12, (i) => speedTo(i < 6 ? 12 : 31 + 5 * Math.sin(i / 9)));
+    await caption("Turns, cross streets, speed limits", "The street name and the speed sign are the dash's own, set by the phone");
+    cluster.sign(50);
+    await play("ride", 97, 200, 12, (i) => speedTo(i > 150 && i < 170 ? 18 : 33 + 4 * Math.sin(i / 7)));
+    cluster.sign(null);
+
+    await caption("Music, bike data and weather", "Pages switch with the handlebar buttons");
+    await dash(`${A}music/00.jpg`);
+    for (let t = 1; t < 8; t++) { await wait(560); await dash(`${A}music/0${t}.jpg`); }
+    await caption("Your bike at a glance", "Battery, coolant, fuel and maintenance, read from the bike");
+    await Promise.all([bikeScroll(), dash(`${A}pages/bike-night.jpg`)]);
+    await caption("Settings", "A few choices that change what the dash shows");
+    await settings(); await wait(1700);
+
+    await caption("Almost there", "Day and night palettes switch at sunrise and sunset");
+    await phone(`${A}phone/navigating.jpg`);
+    await play("ride", 201, 252, 12, (i) => speedTo(i > 240 ? 12 : 30 + 4 * Math.sin(i / 8)));
+    for (let i = 0; i < 12; i++) { speedTo(0); await wait(60); }
+    v = 0; cluster.set({ speed: 0 });
+    await caption("You're here", "");
+    await dash(`${A}pages/arrived-night.jpg`, { hold: 2200 });
+
+    await caption("Now make your own", "Docs, test vectors, templates and an AI agent skill: maxdash");
+    cluster.set({ clock: "14:42" });
+    await Promise.all([phone("../../templates/phone/navigating.html"), dash("../../templates/dash/turn.html")]);
+    await wait(2200);
+    await dash("../../templates/dash/map.html", { hold: 2200 });
+    window.demoDone = true;
+  })();
+</script>
+</body>
+</html>

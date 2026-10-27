@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Dash in the cluster</title>
+<style>html, body { margin: 0; background: #000; } #here { width: 1000px; height: 640px; }</style>
+</head>
+<body>
+<!-- Any dash page inside the drawn NMAX cluster: cluster/preview.html?page=../dash/turn.html -->
+<div id="here"></div>
+<script src="cluster.js"></script>
+<script>
+  const c = mountCluster(document.getElementById("here"));
+  const page = new URLSearchParams(location.search).get("page") || "../dash/turn.html";
+  const f = document.createElement("iframe");
+  f.src = page; f.title = "Dash page";
+  c.frame.append(f);
+  c.set({ speed: 32 });
+</script>
+</body>
+</html>

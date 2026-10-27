@@ -1,0 +1,27 @@
+name: check
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: |
+          pip install pyyaml
+          python3 -m unittest tools/test_lint.py tools/test_check_vectors.py tools/test_repo_files.py
+      - name: Lint
+        run: python3 tools/lint.py
+      - name: Vectors
+        run: python3 tools/check_vectors.py
+      - name: Secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

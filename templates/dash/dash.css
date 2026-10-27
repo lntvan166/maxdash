@@ -1,0 +1,47 @@
+/* Dash page layout, measured on the NMAX Turbo dash (docs/how-it-works/dash-canvas.md).
+   Frame 480×234 (or 480×240). The dash draws its zoom buttons at x 9–49 / y 68–147.5 and a road bar from
+   y 188 down; text never goes there. The map may run under both. */
+@import url("../tokens.css");
+
+html, body { margin: 0; background: #000; }
+.dash { position: relative; width: 480px; height: var(--h, 234px); overflow: hidden; background: var(--d-ground); color: var(--d-ink); }
+.dash svg.map { position: absolute; inset: 0; width: 480px; height: 240px; }
+
+/* left turn panel: glyph above the ＋ button, distance beside it, street and "then" right of the buttons */
+.panel { position: absolute; left: 0; top: 0; width: 172px; height: 100%; background: var(--d-panel); }
+.dash.day .panel { box-shadow: 1px 0 0 #d8d7d3; }
+.rail { position: absolute; left: -14px; top: 64px; width: 69px; height: 88.5px; border-radius: 12px; background: var(--d-rail); }
+.glyph { position: absolute; left: 10px; top: 6px; width: 50px; height: 58px; }
+.dist { position: absolute; left: 76px; top: 10px; font: 600 36px/44px var(--font); letter-spacing: -0.02em; white-space: nowrap; }
+.dist small { font: 500 16px/1 var(--font); color: var(--d-muted); margin-left: 4px; letter-spacing: 0; }
+.street { position: absolute; left: 60px; top: 80px; width: 104px; font: 600 20px/24px var(--font); }
+.then { position: absolute; left: 60px; top: 136px; width: 108px; display: flex; gap: 5px; align-items: center; font: 500 16px/20px var(--font); color: var(--d-muted); }
+.then svg { width: 18px; height: 18px; flex: none; }
+
+/* top right: ETA chip */
+.eta { position: absolute; right: 8px; top: 8px; display: flex; gap: 10px; align-items: baseline; padding: 6px 12px; border-radius: 10px; background: var(--d-panel); }
+.dash.day .eta { box-shadow: 0 0 0 1px #d8d7d3 inset; }
+.eta b { font: 600 20px/24px var(--font); }
+.eta span { font: 500 16px/20px var(--font); color: var(--d-muted); }
+
+/* labels on the map */
+.label { position: absolute; font: 600 17px/20px var(--font); color: var(--d-ink); text-shadow: 0 0 3px var(--d-ground), 0 0 3px var(--d-ground), 0 0 3px var(--d-ground); white-space: nowrap; }
+.pill { position: absolute; font: 600 17px/20px var(--font); color: #000; background: var(--d-route); padding: 2px 9px; border-radius: 8px; white-space: nowrap; }
+
+/* full-page cards (arrival, idle) */
+.card { position: absolute; inset: 0 0 auto 0; height: 186px; display: grid; align-content: center; padding: 0 24px 0 72px; gap: 6px; }
+.card .t { font: 600 32px/38px var(--font); letter-spacing: -0.01em; }
+.card .s { font: 500 18px/24px var(--font); color: var(--d-muted); }
+.card .f { font: 500 17px/22px var(--font); color: var(--d-muted); margin-top: 8px; }
+.card .f b { color: var(--d-ink); font-weight: 600; }
+
+/* What the dash itself draws on top (shown by default so mockups look like the bike; ?chrome=0 hides it) */
+.chrome { position: absolute; inset: 0; pointer-events: none; }
+.chrome .bar { position: absolute; left: 0; right: 0; top: 188px; bottom: 0; background: rgba(0, 0, 0, 0.62); color: #fff; font: 600 20px/1 var(--font); display: flex; justify-content: center; align-items: center; gap: 6px; padding-bottom: calc(var(--h, 234px) - 234px); }
+.chrome .bar::before { content: ""; border: 5px solid transparent; border-bottom: 9px solid #fff; border-top: 0; }
+.chrome svg { position: absolute; left: 0; top: 0; width: 480px; height: 234px; }
+.chrome .sign { position: absolute; left: 411px; top: 135px; width: 62px; height: 62px; box-sizing: border-box; border-radius: 50%; border: 6px solid #e0201b; background: #fff; color: #000; display: grid; place-items: center; font: 700 22px/1 var(--font); }
+
+/* ?guides=1 outlines the no-text zones */
+.guides { position: absolute; inset: 0; pointer-events: none; }
+.guides i { position: absolute; outline: 1px dashed #2f7cf6; background: rgba(47, 124, 246, 0.12); }

@@ -1,0 +1,13 @@
+{
+  "name": "maxdash-tools",
+  "private": true,
+  "description": "Checks for the maxdash templates; `npm run demo` re-records the README demo (author only: needs media/raw/demo/).",
+  "type": "module",
+  "scripts": {
+    "check:templates": "node tools/check_templates.mjs",
+    "demo": "node tools/check_templates.mjs --record"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
+}

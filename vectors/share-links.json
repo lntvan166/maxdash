@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "about": "Text a share sheet hands your app (from Google Maps, Apple Maps) and the destination to extract. Places are public landmarks in Ho Chi Minh City.",
+  "vectors": [
+    {
+      "id": "place-data-coords",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Place link: take !3d<lat>!4d<lng> from the data part, not the @ viewport",
+      "input": {
+        "text": "https://www.google.com/maps/place/Ph%E1%BB%91+%C4%91i+b%E1%BB%99+Nguy%E1%BB%85n+Hu%E1%BB%87/@10.7741,106.7038,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!8m2!3d10.774133!4d106.703791"
+      },
+      "expect": {
+        "kind": "coords",
+        "lat": 10.774133,
+        "lng": 106.703791,
+        "name": "Phố đi bộ Nguyễn Huệ"
+      }
+    },
+    {
+      "id": "viewport-only",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Only a map view: @<lat>,<lng>,<zoom>",
+      "input": {
+        "text": "https://www.google.com/maps/@10.78,106.70,15z"
+      },
+      "expect": {
+        "kind": "coords",
+        "lat": 10.78,
+        "lng": 106.7
+      }
+    },
+    {
+      "id": "q-coords",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Old style ?q=<lat>,<lng>",
+      "input": {
+        "text": "https://maps.google.com/?q=10.7769,106.7009"
+      },
+      "expect": {
+        "kind": "coords",
+        "lat": 10.7769,
+        "lng": 106.7009
+      }
+    },
+    {
+      "id": "search-api-coords",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Maps URLs API search with coordinates",
+      "input": {
+        "text": "https://www.google.com/maps/search/?api=1&query=10.7725,106.6980"
+      },
+      "expect": {
+        "kind": "coords",
+        "lat": 10.7725,
+        "lng": 106.698
+      }
+    },
+    {
+      "id": "search-api-text",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Maps URLs API search with text only: search the name",
+      "input": {
+        "text": "https://www.google.com/maps/search/?api=1&query=Highlands+Coffee+Nguy%E1%BB%85n+Hu%E1%BB%87"
+      },
+      "expect": {
+        "kind": "query",
+        "q": "Highlands Coffee Nguyễn Huệ"
+      }
+    },
+    {
+      "id": "apple-maps",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Apple Maps link: ll= gives coordinates, q= the name",
+      "input": {
+        "text": "https://maps.apple.com/?ll=10.7725,106.6980&q=Ch%E1%BB%A3%20B%E1%BA%BFn%20Th%C3%A0nh"
+      },
+      "expect": {
+        "kind": "coords",
+        "lat": 10.7725,
+        "lng": 106.698,
+        "name": "Chợ Bến Thành"
+      }
+    },
+    {
+      "id": "share-sheet-short-link",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "What the Google Maps app shares: name, address lines, then a short link. Find the first URL; follow its redirect on the phone; parse the result again",
+      "input": {
+        "text": "Phố đi bộ Nguyễn Huệ\nQuận 1\nhttps://maps.app.goo.gl/AbC123?g_st=ic"
+      },
+      "expect": {
+        "kind": "redirect",
+        "then": "GET https://maps.app.goo.gl/AbC123?g_st=ic without following, read Location, parse that URL"
+      }
+    },
+    {
+      "id": "place-name-only",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "A place link with no coordinates (a short link can resolve to this): search the name, let the rider confirm",
+      "input": {
+        "text": "https://www.google.com/maps/place/Ch%E1%BB%A3+B%E1%BA%BFn+Th%C3%A0nh/"
+      },
+      "expect": {
+        "kind": "query",
+        "q": "Chợ Bến Thành"
+      }
+    },
+    {
+      "id": "q-text-ftid",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Where a short place link often lands: ?q= holds a name and address, no coordinates. Search the text.",
+      "input": {
+        "text": "https://maps.google.com/?q=Ch%E1%BB%A3+B%E1%BA%BFn+Th%C3%A0nh,+L%C3%AA+L%E1%BB%A3i,+Qu%E1%BA%ADn+1&ftid=0x0:0x0"
+      },
+      "expect": {
+        "kind": "query",
+        "q": "Chợ Bến Thành, Lê Lợi, Quận 1"
+      }
+    },
+    {
+      "id": "directions-with-stop",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Directions link: the first segment is the origin, the last is the destination, the ones between are stops. Coordinates are !1d<lng>!2d<lat> per waypoint, in order",
+      "input": {
+        "text": "https://www.google.com/maps/dir/Landmark+81/Dinh+%C4%90%E1%BB%99c+L%E1%BA%ADp/Ch%E1%BB%A3+L%E1%BB%9Bn/@10.77,106.68,13z/data=!4m20!4m19!1m5!1m1!1s0x1:0x2!2m2!1d106.7219!2d10.7951!1m5!1m1!1s0x3:0x4!2m2!1d106.6953!2d10.7770!1m5!1m1!1s0x5:0x6!2m2!1d106.6505!2d10.7503!3e0"
+      },
+      "expect": {
+        "kind": "directions",
+        "destination": {
+          "lat": 10.7503,
+          "lng": 106.6505,
+          "name": "Chợ Lớn"
+        },
+        "stops": [
+          {
+            "lat": 10.777,
+            "lng": 106.6953,
+            "name": "Dinh Độc Lập"
+          }
+        ]
+      }
+    },
+    {
+      "id": "directions-destination-no-coords",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Directions link whose destination has no coordinates in the data: search its text, never reuse the origin's coordinates",
+      "input": {
+        "text": "https://www.google.com/maps/dir/Landmark+81/B%E1%BB%87nh+vi%E1%BB%87n+Ch%E1%BB%A3+R%E1%BA%ABy,+Qu%E1%BA%ADn+5/@10.77,106.68,13z/data=!4m9!4m8!1m5!1m1!1s0x1:0x2!2m2!1d106.7219!2d10.7951!1m0!3e9"
+      },
+      "expect": {
+        "kind": "directions",
+        "destination": {
+          "q": "Bệnh viện Chợ Rẫy, Quận 5"
+        },
+        "stops": []
+      }
+    },
+    {
+      "id": "directions-latlng-segment",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Directions to a raw lat,lng segment, origin = the rider",
+      "input": {
+        "text": "https://www.google.com/maps/dir/Your+location/10.7721095,106.6980277/@10.77,106.69,15z"
+      },
+      "expect": {
+        "kind": "directions",
+        "destination": {
+          "lat": 10.7721095,
+          "lng": 106.6980277
+        },
+        "stops": []
+      }
+    },
+    {
+      "id": "text-around-url",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Extra words and a Plus Code before the URL: take the URL",
+      "input": {
+        "text": "QPG4+4Q https://maps.google.com/?q=10.5,106.5"
+      },
+      "expect": {
+        "kind": "coords",
+        "lat": 10.5,
+        "lng": 106.5
+      }
+    },
+    {
+      "id": "out-of-range",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Coordinates out of range: reject",
+      "input": {
+        "text": "https://www.google.com/maps/@999,999,15z"
+      },
+      "expect": {
+        "kind": "none"
+      }
+    },
+    {
+      "id": "not-a-map-link",
+      "label": "documented — not yet observed",
+      "source": "docs/how-it-works/routing-options.md",
+      "note": "Not a maps link: say so, do not guess",
+      "input": {
+        "text": "https://example.com/nothing"
+      },
+      "expect": {
+        "kind": "none"
+      }
+    }
+  ]
+}

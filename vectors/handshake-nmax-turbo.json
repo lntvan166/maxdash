@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "about": "Session on the NMAX Turbo (dash 006-B3952-01). Feed each bike frame to your session logic; after each, your app must have sent exactly the listed frames, in order. The order is observed; waiting for the 82 after 84 before the init is documented.",
+  "vectors": [
+    {
+      "id": "nmax-turbo-session",
+      "label": "documented — not yet observed",
+      "source": "docs/protocol/link-a-dash.md",
+      "input": {
+        "steps": [
+          {
+            "from": "bike",
+            "frame_hex": "6E 41 6C 40 01 03 42 0A 00 00 00 00 22 E3 16 18 30 30 30 30 30 30 30 30 30 30",
+            "note": "66 serial"
+          },
+          {
+            "from": "phone",
+            "must_send": [
+              {
+                "command": 81,
+                "flag": 0,
+                "payload_hex": "01 00"
+              },
+              {
+                "command": 33,
+                "flag": 1,
+                "payload_hex": "7C 06 00 01 00 00 00 00"
+              }
+            ]
+          },
+          {
+            "from": "bike",
+            "frame_hex": "6E 41 6C 40 01 03 52 02 00 00 00 00 63 0D BF 37 01 00",
+            "note": "early 82: does NOT trigger the init"
+          },
+          {
+            "from": "bike",
+            "frame_hex": "6E 41 6C 40 01 03 53 10 00 00 00 01 AD 20 B5 0B 3A 3A 3C 27 48 39 33 3F 38 27 3A 3B 4E 3E 04 00",
+            "note": "83 challenge: part 006-B3952-01 -> 480x234"
+          },
+          {
+            "from": "phone",
+            "must_send": [
+              {
+                "command": 84,
+                "flag": 1,
+                "payload_hex": "44 34 0E 0A"
+              }
+            ]
+          },
+          {
+            "from": "bike",
+            "frame_hex": "6E 41 6C 40 01 03 52 02 00 00 00 00 63 0D BF 37 01 00",
+            "note": "82 after 84: now send the init"
+          },
+          {
+            "from": "phone",
+            "must_send": [
+              {
+                "command": 2,
+                "flag": 0,
+                "payload_hex": "00 00"
+              },
+              {
+                "command": 31,
+                "flag": 0,
+                "payload_hex": "01 00"
+              },
+              {
+                "command": 10,
+                "flag": 0,
+                "payload_hex": "00 00"
+              },
+              {
+                "command": 14,
+                "flag": 1,
+                "payload_hex": "07 1A 00 00"
+              },
+              {
+                "command": 11,
+                "flag": 0,
+                "payload_hex": "00 00"
+              },
+              {
+                "command": 13,
+                "flag": 0,
+                "payload_hex": "01 00"
+              },
+              {
+                "command": 3,
+                "flag": 1,
+                "payload_hex": "20"
+              },
+              {
+                "command": 17,
+                "flag": 1,
+                "payload_hex": "00 00 00 00 04 6B 6D 2F 68"
+              },
+              {
+                "command": 12,
+                "flag": 0,
+                "payload_hex": "01 00"
+              }
+            ]
+          },
+          {
+            "from": "bike",
+            "frame_hex": "6E 41 6C 40 01 01 37 02 00 00 00 00 2E 00 08 07 01 00",
+            "note": "rider pressed Home"
+          },
+          {
+            "from": "phone",
+            "must_send": [
+              {
+                "command": 2,
+                "flag": 0,
+                "payload_hex": "00 00"
+              },
+              {
+                "command": 14,
+                "flag": 1,
+                "payload_hex": "07 1A 00 00"
+              },
+              {
+                "command": 13,
+                "flag": 0,
+                "payload_hex": "01 00"
+              },
+              {
+                "command": 3,
+                "flag": 1,
+                "payload_hex": "20"
+              },
+              {
+                "command": 10,
+                "flag": 0,
+                "payload_hex": "00 00"
+              },
+              {
+                "command": 11,
+                "flag": 0,
+                "payload_hex": "00 00"
+              }
+            ],
+            "then": "start map frames, one in flight"
+          },
+          {
+            "from": "bike",
+            "frame_hex": "6E 41 6C 40 01 03 33 00 00 00 00 00 4B E3 F1 BD",
+            "note": "handlebar UP"
+          },
+          {
+            "from": "phone",
+            "must_send": [
+              {
+                "command": 14,
+                "flag": 1,
+                "payload_hex": "07 1A 00 00"
+              }
+            ],
+            "then": "your own reaction to UP"
+          }
+        ]
+      },
+      "expect": {
+        "screen": [
+          480,
+          234
+        ]
+      },
+      "note": "The frame order and bike frames are observed (observations.md#2026-10-24); waiting for the 82 after 84, the cleared bottom bar (3 = 20) and cmd 12 are documented, so the whole session carries the weaker label."
+    }
+  ]
+}

@@ -3,3 +3,5 @@ docs/superpowers/
 .DS_Store
 node_modules/
 media/raw/
+tools/leaks.local.txt
+__pycache__/

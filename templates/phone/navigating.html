@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phone: navigating</title>
+<link rel="stylesheet" href="phone.css">
+</head>
+<body>
+<!-- During a ride the phone is in a pocket; this screen is for a quick look at a stop. -->
+<main class="screen">
+  <h1>To Ben Thanh</h1>
+  <div class="status"><span class="chip on"><i></i>Dash 4.1 fps</span><span class="chip on"><i></i>Bike</span><span class="chip on"><i></i>GPS</span></div>
+  <div class="caption">On the dash now</div>
+  <div class="preview"><iframe src="../dash/turn.html" title="Dash preview" tabindex="-1"></iframe></div>
+  <div class="group">
+    <div class="row"><span class="grow">Arrive<span class="sub">7.0 km left</span></span><span class="val" style="color:var(--text);font-weight:600">14:42</span></div>
+    <div class="row"><span class="grow">Next<span class="sub">Turn left into Lê Quang Sung</span></span><span class="val">30 m</span></div>
+  </div>
+  <div class="spacer"></div>
+  <button class="btn danger" type="button">End route</button>
+</main>
+<nav class="tabbar" aria-label="Tabs"><a href="home.html" aria-current="page"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3l8 19-8-4-8 4z"/></svg>Ride</a><a href="settings.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="13" r="3.5"/><path d="M13 3v3M13 20v3M3 13h3M20 13h3M5.9 5.9l2.1 2.1M18 18l2.1 2.1M5.9 20.1L8 18M18 8l2.1-2.1"/></svg>Settings</a></nav>
+</body>
+</html>

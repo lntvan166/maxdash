@@ -1,0 +1,246 @@
+{
+  "schema": 1,
+  "about": "Phone-to-bike frames. Encode input and compare byte for byte with expect.frame_hex.",
+  "vectors": [
+    {
+      "id": "hello-81",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Hello, first reply to 66",
+      "input": {
+        "direction": 6,
+        "command": 81,
+        "flag": 0,
+        "payload_hex": "01 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 51 02 00 00 00 00 1A 4D 1C EC 01 00"
+      }
+    },
+    {
+      "id": "hello-33",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Hello, second part",
+      "input": {
+        "direction": 6,
+        "command": 33,
+        "flag": 1,
+        "payload_hex": "7C 06 00 01 00 00 00 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 21 08 00 00 00 01 00 49 E6 E8 7C 06 00 01 00 00 00 00"
+      }
+    },
+    {
+      "id": "challenge-response-84",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Challenge response for the captured 83 (key 44 34 0E 0A)",
+      "input": {
+        "direction": 6,
+        "command": 84,
+        "flag": 1,
+        "payload_hex": "44 34 0E 0A"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 54 04 00 00 00 01 76 9D BC EF 44 34 0E 0A"
+      }
+    },
+    {
+      "id": "nav-state-2",
+      "label": "observed",
+      "source": "observations.md#2026-10-25",
+      "note": "Navigation state: not navigating, 2-byte form",
+      "input": {
+        "direction": 6,
+        "command": 2,
+        "flag": 0,
+        "payload_hex": "00 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 02 02 00 00 00 00 11 EA DF C1 00 00"
+      }
+    },
+    {
+      "id": "init-31",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Init 31",
+      "input": {
+        "direction": 6,
+        "command": 31,
+        "flag": 0,
+        "payload_hex": "01 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 1F 02 00 00 00 00 6D E3 75 5B 01 00"
+      }
+    },
+    {
+      "id": "home-flag-10",
+      "label": "observed",
+      "source": "observations.md#2026-10-25",
+      "note": "Home not saved, 2-byte form",
+      "input": {
+        "direction": 6,
+        "command": 10,
+        "flag": 0,
+        "payload_hex": "00 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 0A 02 00 00 00 00 2F 37 53 15 00 00"
+      }
+    },
+    {
+      "id": "empty-label-14",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Empty label: init step and the handlebar re-arm reply",
+      "input": {
+        "direction": 6,
+        "command": 14,
+        "flag": 1,
+        "payload_hex": "07 1A 00 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 0E 04 00 00 00 01 D0 E6 A7 AE 07 1A 00 00"
+      }
+    },
+    {
+      "id": "work-flag-11",
+      "label": "observed",
+      "source": "observations.md#2026-10-25",
+      "note": "Work not saved, 2-byte form",
+      "input": {
+        "direction": 6,
+        "command": 11,
+        "flag": 0,
+        "payload_hex": "00 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 0B 02 00 00 00 00 E5 EB F2 4E 00 00"
+      }
+    },
+    {
+      "id": "init-13",
+      "label": "observed",
+      "source": "observations.md#2026-10-24",
+      "note": "Init 13",
+      "input": {
+        "direction": 6,
+        "command": 13,
+        "flag": 0,
+        "payload_hex": "01 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 0D 02 00 00 00 00 32 FD EE 41 01 00"
+      }
+    },
+    {
+      "id": "road-name-3",
+      "label": "observed",
+      "source": "observations.md#2026-10-25",
+      "note": "Bottom-bar text 'Lê Lợi' (UTF-8, flag 1)",
+      "input": {
+        "direction": 6,
+        "command": 3,
+        "flag": 1,
+        "payload_hex": "4C C3 AA 20 4C E1 BB A3 69"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 03 09 00 00 00 01 EF 43 CD 21 4C C3 AA 20 4C E1 BB A3 69"
+      }
+    },
+    {
+      "id": "road-clear-3",
+      "label": "documented — not yet observed",
+      "source": "docs/protocol/link-a-dash.md",
+      "note": "Bottom-bar text cleared with one space",
+      "input": {
+        "direction": 6,
+        "command": 3,
+        "flag": 1,
+        "payload_hex": "20"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 03 01 00 00 00 01 5F 8D B3 33 20"
+      }
+    },
+    {
+      "id": "speed-limit-50-17",
+      "label": "observed",
+      "source": "observations.md#2026-10-25",
+      "note": "Speed-limit sign 50 km/h (f32 LE 50.0, flag 1)",
+      "input": {
+        "direction": 6,
+        "command": 17,
+        "flag": 1,
+        "payload_hex": "00 00 48 42 04 6B 6D 2F 68"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 11 09 00 00 00 01 1A A0 40 70 00 00 48 42 04 6B 6D 2F 68"
+      }
+    },
+    {
+      "id": "speed-limit-clear-17",
+      "label": "observed",
+      "source": "observations.md#2026-10-25",
+      "note": "Speed-limit sign removed (limit 0, flag 1)",
+      "input": {
+        "direction": 6,
+        "command": 17,
+        "flag": 1,
+        "payload_hex": "00 00 00 00 04 6B 6D 2F 68"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 11 09 00 00 00 01 57 2B 24 71 00 00 00 00 04 6B 6D 2F 68"
+      }
+    },
+    {
+      "id": "init-12",
+      "label": "documented — not yet observed",
+      "source": "docs/protocol/link-a-dash.md",
+      "note": "Last init command",
+      "input": {
+        "direction": 6,
+        "command": 12,
+        "flag": 0,
+        "payload_hex": "01 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 0C 02 00 00 00 00 F8 21 4F 1A 01 00"
+      }
+    },
+    {
+      "id": "pause-ack-20",
+      "label": "documented — not yet observed",
+      "source": "docs/protocol/link-a-dash.md",
+      "note": "Pause ACK (empty payload)",
+      "input": {
+        "direction": 6,
+        "command": 20,
+        "flag": 0,
+        "payload_hex": ""
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 14 00 00 00 00 00 18 9D A0 E2"
+      }
+    },
+    {
+      "id": "latency-16",
+      "label": "documented — not yet observed",
+      "source": "docs/protocol/link-a-dash.md",
+      "note": "Latency report for a 314 ms round trip",
+      "input": {
+        "direction": 6,
+        "command": 16,
+        "flag": 0,
+        "payload_hex": "03 00"
+      },
+      "expect": {
+        "frame_hex": "6E 41 6C 40 01 06 10 02 00 00 00 00 9D AB AF A9 03 00"
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=480">
+<title>Dash: map</title>
+<link rel="stylesheet" href="dash.css">
+</head>
+<body>
+<!-- Cruising: next turn in 1.5 km. The dash draws its own speed-limit sign (cmd 17), so our text keeps clear of it. -->
+<main class="dash" data-road="3 Tháng 2" data-limit="50" data-native-sign>
+  <svg class="map" viewBox="0 0 480 240" aria-hidden="true">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M400 -10C452 40 470 96 470 150S452 230 430 260" stroke="var(--d-water)" stroke-width="30"/>
+      <path d="M150 40H480M150 100H300M150 178H480M240 0V240M400 0V240" stroke="var(--d-road-minor)" stroke-width="7"/>
+      <path d="M150 128C230 128 262 112 290 84S330 30 330 0" stroke="var(--d-road-major)" stroke-width="14"/>
+      <path d="M330 0V240" stroke="var(--d-road-major)" stroke-width="16"/>
+      <path d="M330 260V176" stroke="var(--d-route-passed)" stroke-width="10"/>
+      <path d="M330 176V-10" stroke="var(--d-route)" stroke-width="10"/>
+    </g>
+    <path d="M330 164l-12 24 12-7 12 7z" fill="var(--d-me)" stroke="var(--d-ground)" stroke-width="3" stroke-linejoin="round"/>
+  </svg>
+  <div class="panel">
+    <div class="rail"></div>
+    <svg class="glyph" viewBox="0 0 50 58" aria-label="Bear right" data-keep="turn glyph">
+      <path d="M14 58V34Q14 22 26 16L36 10" fill="none" stroke="var(--d-route)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 4l14 4-4 14" fill="none" stroke="var(--d-route)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="dist" data-keep="distance">1.5<small>km</small></div>
+    <div class="street" data-keep="street">3 Tháng 2</div>
+  </div>
+  <div class="label" style="left:186px;top:136px" data-keep="map label">Lãnh Binh Thăng</div>
+  <div class="eta" data-keep="eta"><b>14:44</b><span>5.7 km</span></div>
+</main>
+<script src="frame.js"></script>
+</body>
+</html>
