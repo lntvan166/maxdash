@@ -198,6 +198,13 @@ colours, few textures, no noise. (observed (bike test 2026-10-24))
 When nothing changes on screen (stopped at a light), you can skip identical frames and send one every
 2 s to keep the link alive. (assumed)
 
+**Every number in this section was measured on an iPhone.** Android talks to the dash over Bluetooth Classic
+SPP directly, and a public Android app reports about 14 fps on an XMAX, far above the iPhone's ~4–5 fps.
+(documented — not yet observed) On Android the limits above are a safe start, but likely too cautious:
+measuring Send→ACK, KB per frame and frames/s on your own bike is recommended (optional) if you want a
+smoother map. If you do measure, sharing the numbers in a [bike report](../../CONTRIBUTING.md) is very
+welcome: the first Android measurement will replace this paragraph.
+
 ## Handlebar buttons
 
 UP (51) and DOWN (52) reach the phone. **Right after each press, send 14 flag 1 `07 1A 00 00`**, or only

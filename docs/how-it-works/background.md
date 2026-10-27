@@ -29,6 +29,7 @@ Nothing on Android has been tested on the author's bike yet. A public Android ap
 | Wake on ignition | `CompanionDeviceManager` association with the bike's unit, so its presence starts the service | assumed |
 | Permissions | `BLUETOOTH_CONNECT`, `BLUETOOTH_SCAN`, `ACCESS_FINE_LOCATION`, `ACCESS_BACKGROUND_LOCATION`, `POST_NOTIFICATIONS`, `FOREGROUND_SERVICE_CONNECTED_DEVICE`, `FOREGROUND_SERVICE_LOCATION` | assumed |
 | Draw the map | `Bitmap` + `Canvas`, `Bitmap.compress(JPEG, …)` | assumed |
+| Speed | Expected well above the iPhone's 4–5 fps (about 14 fps reported on an XMAX). The iPhone limits work as a start; measuring on your bike (Send→ACK, KB per frame, frames/s) is recommended but optional, and a report of the numbers is welcome | documented — not yet observed |
 
 Open question: can the unit hold an Android phone on SPP while an iPhone keeps music (A2DP) at the same time?
 If you test it, please send a report.

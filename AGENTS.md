@@ -81,7 +81,7 @@ again. Explain how they will re-install (Xcode Run, or Sideloadly).
    are in `tokens.css`), and show them again. Repeat until they like it.
 4. Dash rules you must keep, whatever they choose
    ([dash-canvas.md](docs/how-it-works/dash-canvas.md)): no text under the zoom buttons or the bottom bar;
-   text ≥ 16 px; flat colours so a frame stays around 5–8 KB.
+   text ≥ 16 px; flat colours so a frame stays around 5–8 KB (an iPhone figure; Android can likely go higher, see step 7).
    Check their dash mockups with `node tools/check_templates.mjs --dir <their design folder>` (run from
    `maxdash`, after installing Node.js from nodejs.org and running `npm install` there once; it checks the safe area at 480×234 and 480×240 and saves screenshots in the git-ignored media/raw folder). It does
    not measure JPEG size: that is checked in the real app.
@@ -141,6 +141,11 @@ Give them this checklist (in their language):
 5. Try UP and DOWN on the handlebar.
 6. Lock the phone and keep riding: the map must keep moving.
 7. Ignition off, then on again: the app should reconnect.
+8. **Android only, optional:** suggest measuring the link speed
+   ([android.md](docs/build/android.md#measure-the-link-speed-optional-recommended)). The speed limits in the
+   docs were measured on an iPhone and work as a safe start; Android's Bluetooth is expected to be much faster,
+   so measuring lets them tune for a smoother map. If they measure, offer to draft a bike report with the
+   numbers (see "share what you find" below): welcome, never required.
 
 Ask what happened at each step. If something fails, use [lifecycle.md](docs/how-it-works/lifecycle.md)
 ("Things that go wrong") before changing code.

@@ -32,6 +32,19 @@ Press **Run** in Android Studio with the phone selected. The app stays installed
 To give the app to a friend, build an APK (Build › Build APK) and send it; they allow "Install unknown
 apps" for the file manager they open it with.
 
+## Measure the link speed (optional, recommended)
+
+The frame rate, JPEG size and frames-in-flight limits in the docs come from an iPhone. They work on Android
+as a safe start, but Android's Bluetooth link is expected to be much faster. If you want a smoother map,
+measure yours:
+
+1. Log, for every map frame: its size in KB and the time from send to its ACK (80).
+2. Ride or idle for a minute at window 1 (one frame in flight), then at window 2. Note frames/s for each.
+3. Raise the JPEG quality (or the frame rate) step by step while the dash stays smooth and no 56 arrives.
+4. Keep the best setting. If you are happy to, **share the numbers in a bike report** (phone model, bike,
+   dash part number, window, KB per frame, Send→ACK, frames/s): they would become the Android figures in
+   [flow control](../protocol/link-a-dash.md#flow-control-and-speed).
+
 ## Troubleshooting
 
 | Problem | Fix |
