@@ -129,3 +129,7 @@ See [link-b-ccu.md](link-b-ccu.md) for the protocol. What the bike did:
 - The dash's own call-history and notification lists stayed empty: nothing in this protocol fills them yet; their
   commands are unknown.
 
+### Speed-limit sign across a key cycle
+
+- Sign 50 shown (cmd 17 flag 1), key off for about 10 s, key on, the phone did not send the sign again: the dash came
+  back with no sign. It keeps no sign across power-off.
