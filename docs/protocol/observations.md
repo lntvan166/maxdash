@@ -135,3 +135,10 @@ See [link-b-ccu.md](link-b-ccu.md) for the protocol. What the bike did:
 
 - Sign 50 shown (cmd 17 flag 1), key off for about 10 s, key on, the phone did not send the sign again: the dash came
   back with no sign. It keeps no sign across power-off.
+
+### Official app on Android, Bluetooth capture (316, 278, 303)
+
+- Phone status 316: battery byte is the plain percentage; it gained bit 7 while the phone was on its charger
+  (`18` → `97` → `18`). Volumes carry 0x80 when valid.
+- Track info 278 and notification 303 decoded as in link-b-ccu.md; the dash showed the envelope icon and listed the
+  message. The passkey channel stayed open for the whole session; the app never opened the dash's map link.

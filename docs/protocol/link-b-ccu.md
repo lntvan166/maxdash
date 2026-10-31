@@ -131,7 +131,7 @@ Ask every 10 s. (documented — not yet observed: the period)
 |---|---|---|---|
 | Time (cmd 10) | `00 0A <seq>` + 8 bytes BE of local epoch seconds (UTC seconds + time-zone offset) | after auth, and when the bike asks with 9 | observed (bike test 2026-10-31): the dash clock matched the phone |
 | Language (cmd 12) | `00 0C <seq> <lang>`: 15 Vietnamese, 0 English | after auth, and when the bike asks with 11 | documented — not yet observed |
-| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. Each percentage byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 | on change | documented — not yet observed: on a bike test (2026-10-31) a battery byte with bit 7 set made the dash show the phone as charging while it was not; bit 7 may mean charging, not "valid". An iPhone that does not send 316 gets a correct battery and signal icon from its own Bluetooth link |
+| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. **battery** = percentage 0…100, **bit 7 set while charging**; each volume byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 (bars not yet observed) | on change | observed (Android capture of the official app 2026-10-31: `01 3C 1E E4 D0 01` = 30 %, volumes 100 / 80, flags 1; on the charger `97` = 23 % charging). An iPhone that does not send 316 gets a correct battery and signal icon from its own Bluetooth link |
 
 ## Media and calls
 
@@ -147,7 +147,17 @@ Ask every 10 s. (documented — not yet observed: the period)
 `01 16`, then artist, album and title, each as `[len u8] + UTF-8` (cut to ≤ 64 bytes on a character
 boundary), then duration seconds (u24 BE), play state (1 paused, 2 playing, 3 forward, 4 rewind, 255
 stopped), speed in tenths (u16 BE, 10 = 1.0×), position seconds (u24 BE).
-(documented — not yet observed)
+(observed: Android capture of the official app, 2026-10-31: e.g. trailer `00 01 04 02 00 0A 00 00 02` = 260 s,
+playing, 1.0×, at 2 s; sent again on every key press and track change)
+
+### Notification (303, via DDT V1 send)
+
+`01 2F`, a 3-byte length, then protobuf fields: 3 notification id (varint), 5–10 year, month, day, hour, minute,
+second (varints), 11 title or sender (string), 13 text (string). Example: `18 90 4E 28 EA 0F 30 0A 38 1F 40 15 48 19
+50 35 5A 08 <sender, 8 B> 6A 03 41 6C 6F` (id 10000, 2026-10-31 21:25:53, text "Alo"). The dash lights its envelope
+icon and lists the message. The official app sends it only for apps the rider ticked in its settings, and only with
+Android's notification access granted. A call from a messaging app arrives as a notification ("Missed audio call"),
+not as 308. (observed (Android capture 2026-10-31))
 
 ## Weather
 
