@@ -124,7 +124,9 @@ See [link-b-ccu.md](link-b-ccu.md) for the protocol. What the bike did:
 ### Phone → bike writes
 
 - Time (cmd 10) and language (cmd 12), sent after auth: the dash clock matched the phone after a key cycle.
-- Phone status (cmd 316, e.g. battery 35 %, 4 bars): the dash's phone battery and signal icons matched the phone.
+- Phone status (cmd 316, e.g. battery 35 %, 4 bars): the icons looked right at a glance, but on a ride the same
+  evening the dash showed the phone **charging** (it was not) after a 316 with the battery byte's bit 7 set. Without
+  316 an iPhone's battery and signal show correctly from its own Bluetooth link.
 - 308 sent unasked when a call came in (`[1]`) and ended (`[2]`): a steady call icon (no blinking), cleared by `[2]`.
 - The dash's own call-history and notification lists stayed empty: nothing in this protocol fills them yet; their
   commands are unknown.

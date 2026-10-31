@@ -131,7 +131,7 @@ Ask every 10 s. (documented — not yet observed: the period)
 |---|---|---|---|
 | Time (cmd 10) | `00 0A <seq>` + 8 bytes BE of local epoch seconds (UTC seconds + time-zone offset) | after auth, and when the bike asks with 9 | observed (bike test 2026-10-31): the dash clock matched the phone |
 | Language (cmd 12) | `00 0C <seq> <lang>`: 15 Vietnamese, 0 English | after auth, and when the bike asks with 11 | documented — not yet observed |
-| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. Each percentage byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 | on change | observed (bike test 2026-10-31): the dash's battery and signal icons matched the phone |
+| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. Each percentage byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 | on change | documented — not yet observed: on a bike test (2026-10-31) a battery byte with bit 7 set made the dash show the phone as charging while it was not; bit 7 may mean charging, not "valid". An iPhone that does not send 316 gets a correct battery and signal icon from its own Bluetooth link |
 
 ## Media and calls
 
