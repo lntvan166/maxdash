@@ -16,7 +16,8 @@ Read [README.md](README.md) for the source labels.
 2. Connect over BLE to `YCCU_<code>`, enable notifications, authenticate with code + passkey.
 3. Exchange commands: short ones as single writes, long ones through a chunked channel ("DDT").
 
-On Android the first step uses Bluetooth Classic instead of MFi. (assumed)
+On Android the first step uses Bluetooth Classic instead of MFi: the same request answered on a **secure** RFCOMM
+socket to UUID `00008911-0000-1000-8000-00805F9B34FB` in ~80 ms (an insecure socket failed). (observed (bike test 2026-10-31, Android 13))
 
 ## Step 1: code and passkey (MFi)
 

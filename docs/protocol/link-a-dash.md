@@ -11,7 +11,7 @@ Read [README.md](README.md) for the source labels used below.
 | Phone | How the link is opened | Source |
 |---|---|---|
 | iPhone | ExternalAccessory, protocol string `com.garmin.navilite.data`. The accessory reports `name=LinkCard`, `mfr=YAMAHA MOTOR Co.Ltd`, and also offers `com.yconnect.data` (Link B). Declare both strings in `UISupportedExternalAccessoryProtocols`. A sideloaded app with a free Apple ID can open the session. | observed (bike test 2026-10-24) |
-| Android | Bluetooth Classic RFCOMM (SPP) to the same unit. | documented — not yet observed |
+| Android | Bluetooth Classic RFCOMM to the dash's SPP service `00007220-0000-1000-8000-00805F9B34FB`: an insecure socket connected first try in ~0.45 s. Handshake, init and Home are the same bytes as on iPhone. The dash keeps several phones paired and talks to the one picked on its own device list. | observed (bike test 2026-10-31, Android 13) |
 | Both | **Only one app at a time** can hold the dash link. If the official app or another dash app grabs it first, the unit may drop until the ignition is cycled. | observed (bike test 2026-10-25) |
 
 The link stays up and keeps streaming at the same rate with the phone locked in a pocket (iOS: see
@@ -198,12 +198,19 @@ colours, few textures, no noise. (observed (bike test 2026-10-24))
 When nothing changes on screen (stopped at a light), you can skip identical frames and send one every
 2 s to keep the link alive. (assumed)
 
-**Every number in this section was measured on an iPhone.** Android talks to the dash over Bluetooth Classic
-SPP directly, and a public Android app reports about 14 fps on an XMAX, far above the iPhone's ~4–5 fps.
-(documented — not yet observed) On Android the limits above are a safe start, but likely too cautious:
-measuring Send→ACK, KB per frame and frames/s on your own bike is recommended (optional) if you want a
-smoother map. If you do measure, sharing the numbers in a [bike report](../../CONTRIBUTING.md) is very
-welcome: the first Android measurement will replace this paragraph.
+**The numbers above were measured on an iPhone.** On Android (bike test 2026-10-31, Android 13, synthetic JPEGs,
+window 1, 25 frames per size) the dash took far more:
+
+| Frame | Send→ACK median | fps | KB/s |
+|---|---|---|---|
+| 5 KB | 86 ms | 11.1 | 56 |
+| 10 KB | 98 ms | 9.8 | 93 |
+| 15 KB | 133 ms | 5.9 | 87 |
+| 20 KB | 161 ms | 5.0 | 99 |
+
+About twice the iPhone's rate, so the iPhone's limit is its own accessory path, not the dash. A window of 2 or 3
+frames did not help. (observed (bike test 2026-10-31)) Measuring on your own phone is still recommended (optional);
+a [bike report](../../CONTRIBUTING.md) with your numbers is welcome.
 
 ## Handlebar buttons
 
