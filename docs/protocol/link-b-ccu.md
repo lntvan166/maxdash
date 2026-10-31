@@ -124,9 +124,9 @@ Ask every 10 s. (documented — not yet observed: the period)
 
 | What | Write to CMD write | When | Source |
 |---|---|---|---|
-| Time (cmd 10) | `00 0A <seq>` + 8 bytes BE of local epoch seconds (UTC seconds + time-zone offset) | after auth, and when the bike asks with 9 | documented — not yet observed |
+| Time (cmd 10) | `00 0A <seq>` + 8 bytes BE of local epoch seconds (UTC seconds + time-zone offset) | after auth, and when the bike asks with 9 | observed (bike test 2026-10-31): the dash clock matched the phone |
 | Language (cmd 12) | `00 0C <seq> <lang>`: 15 Vietnamese, 0 English | after auth, and when the bike asks with 11 | documented — not yet observed |
-| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. Each percentage byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 | on change | documented — not yet observed |
+| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. Each percentage byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 | on change | observed (bike test 2026-10-31): the dash's battery and signal icons matched the phone |
 
 ## Media and calls
 
@@ -134,6 +134,7 @@ Ask every 10 s. (documented — not yet observed: the period)
 |---|---|---|---|
 | 279 (`01 17`) | media key, byte 2: 1 next, 2 previous, 3 play, 4 pause | act, then send track info (278) | documented — not yet observed |
 | 281 (`01 19`) | call key, byte 2: 0 reject, 1 answer, 2 end | 308 `01 34 [1]` in call / `[2]` ended (iOS apps cannot control calls) | documented — not yet observed |
+| — (phone call starts / ends) | none: the phone sends 308 unasked | `[1]` shows a steady call icon (it does not blink), `[2]` clears it | observed (bike test 2026-10-31) |
 | 285 (`01 1D`) | volume / mute, byte 2: 1/2 media ±, 3/4 call ±, 5 media mute, 6 mic mute | 316 phone status | documented — not yet observed |
 
 ### Track info (278, via DDT V1 send)

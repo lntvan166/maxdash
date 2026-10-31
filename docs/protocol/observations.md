@@ -118,3 +118,14 @@ See [link-b-ccu.md](link-b-ccu.md) for the protocol. What the bike did:
   (≈ 0.4 L/h). Param 1 bytes 0–1 went 0 → 1645 → 2120 → 3042 with the engine: probably RPM (assumed).
 - Fuel `01 1F` → `01 20` + u32 LE counter; 0 while stationary.
 - Time (9) and language (11) requests went unanswered with no visible effect within a minute.
+
+## 2026-10-31 — NMAX Turbo (Tech MAX), author
+
+### Phone → bike writes
+
+- Time (cmd 10) and language (cmd 12), sent after auth: the dash clock matched the phone after a key cycle.
+- Phone status (cmd 316, e.g. battery 35 %, 4 bars): the dash's phone battery and signal icons matched the phone.
+- 308 sent unasked when a call came in (`[1]`) and ended (`[2]`): a steady call icon (no blinking), cleared by `[2]`.
+- The dash's own call-history and notification lists stayed empty: nothing in this protocol fills them yet; their
+  commands are unknown.
+
