@@ -131,7 +131,7 @@ Ask every 10 s. (documented — not yet observed: the period)
 |---|---|---|---|
 | Time (cmd 10) | `00 0A <seq>` + 8 bytes BE of local epoch seconds (UTC seconds + time-zone offset) | after auth, and when the bike asks with 9 | observed (bike test 2026-10-31): the dash clock matched the phone |
 | Language (cmd 12) | `00 0C <seq> <lang>`: 15 Vietnamese, 0 English | after auth, and when the bike asks with 11 | documented — not yet observed |
-| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. **battery** = percentage 0…100, **bit 7 set while charging**; each volume byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 (bars not yet observed) | on change | observed (Android capture of the official app 2026-10-31: `01 3C 1E E4 D0 01` = 30 %, volumes 100 / 80, flags 1; on the charger `97` = 23 % charging). An iPhone that does not send 316 gets a correct battery and signal icon from its own Bluetooth link |
+| Phone status (cmd 316) | `01 3C <battery> <callVol> <mediaVol> <flags>`. **battery** = percentage 0…100, **bit 7 set while charging**; each volume byte = (0…100 & 0x7F) \| 0x80 when valid. flags = 1 \| btAudio << 1 \| (thermal 0–2) << 2 \| (signal bars 0–5) << 4 | on change | observed (bars too: `01 3C 28 E4 D0 51` = 40 %, 5 bars and `8A … 21` = 10 % charging, 2 bars both showed right, 2026-10-31; Android capture of the official app: `01 3C 1E E4 D0 01` = 30 %, volumes 100 / 80, flags 1; on the charger `97` = 23 % charging). An iPhone that does not send 316 gets a correct battery and signal icon from its own Bluetooth link |
 
 ## Media and calls
 
@@ -139,7 +139,7 @@ Ask every 10 s. (documented — not yet observed: the period)
 |---|---|---|---|
 | 279 (`01 17`) | media key, byte 2: 1 next, 2 previous, 3 play, 4 pause | act, then send track info (278) | documented — not yet observed |
 | 281 (`01 19`) | call key, byte 2: 0 reject, 1 answer, 2 end | 308 `01 34 [1]` in call / `[2]` ended (iOS apps cannot control calls) | documented — not yet observed |
-| — (phone call starts / ends) | none: the phone sends 308 unasked | `[1]` shows a steady call icon (it does not blink), `[2]` clears it | observed (bike test 2026-10-31) |
+| — (phone call starts / ends) | none: the phone sends 308 unasked | `[1]` shows a steady call icon (it does not blink), `[2]` clears it; send 280 with it for the caller's name | observed (bike test 2026-10-31) |
 | 285 (`01 1D`) | volume / mute, byte 2: 1/2 media ±, 3/4 call ±, 5 media mute, 6 mic mute | 316 phone status | documented — not yet observed |
 
 ### Track info (278, via DDT V1 send)
@@ -158,6 +158,18 @@ second (varints), 11 title or sender (string), 13 text (string). Example: `18 90
 icon and lists the message. The official app sends it only for apps the rider ticked in its settings, and only with
 Android's notification access granted. A call from a messaging app arrives as a notification ("Missed audio call"),
 not as 308. (observed (Android capture 2026-10-31))
+
+### Caller (280, via DDT V1 send)
+
+`01 18`, then `[len u8]` + caller name (UTF-8, ≤ 64 B), `[len u8]` + number (ASCII digits and `+`, ≤ 12 B), then
+`00` ringing or `01` missed. **No length field** after `01 18`: with a 3-byte length the CCU rejects it. Sent while the
+call icon is on (308 `[1]`), the dash shows the caller's name; a missed one lands in the dash's call list. (observed
+(bike test 2026-10-31))
+
+### Error reply
+
+A packet the CCU rejects is answered on CMD notify with `FF 01 <command u16 BE> <code>`, e.g. `FF 01 01 18 02` for a
+malformed 280. (observed (bike test 2026-10-31))
 
 ## Weather
 
