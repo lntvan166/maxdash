@@ -17,7 +17,11 @@ Read [README.md](README.md) for the source labels.
 3. Exchange commands: short ones as single writes, long ones through a chunked channel ("DDT").
 
 On Android the first step uses Bluetooth Classic instead of MFi: the same request answered on a **secure** RFCOMM
-socket to UUID `00008911-0000-1000-8000-00805F9B34FB` in ~80 ms (an insecure socket failed). (observed (bike test 2026-10-31, Android 13))
+socket to UUID `00008911-0000-1000-8000-00805F9B34FB` (one session answered on a secure socket only, later ones on an insecure socket too: try both). (observed (bike test 2026-10-31, Android 13))
+
+**Keep that channel open while BLE runs.** With the socket closed after the passkey, every BLE connect to `YCCU_<code>`
+timed out (30 s, no connection); with it open, BLE connected in 0.3 s and the whole chain below (auth, ignition, ECU
+list, vehicle data, fuel) ran as on iPhone. (observed (bike test 2026-10-31, Android 13))
 
 ## Step 1: code and passkey (MFi)
 
